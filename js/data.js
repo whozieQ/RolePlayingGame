@@ -5,7 +5,7 @@ const heroes = [
         name: "Dumbledore",
         type: "hero",
         avatar: "images/hero.jpg",
-        health: 60,
+        maxHealth: 60,
         diceCount: 3,
         currentDice:[]
     },
@@ -13,7 +13,7 @@ const heroes = [
         name: "McGonagall",
         type: "hero",
         avatar: "images/minerva.jpg",
-        health: 50,
+        maxHealth: 60,
         diceCount: 3,
         currentDice:[]
     },
@@ -21,36 +21,37 @@ const heroes = [
         name: "Thor",
         type: "hero",
         avatar: "images/thor.jpg",
-        health: 60,
+        maxHealth: 60,
         diceCount: 3,
         currentDice:[]
     },  
 ]
 const villians = [
     {
-        name: "Voldemort",
+        name: "Bellatrix",
         type: "villian",
-        avatar: "images/monster.jpg",
-        health: 60,
-        diceCount: 3,
+        avatar: "images/beatrix.jpg",
+        maxHealth: 30,
+        diceCount: 1,
         currentDice:[]
     },
     {
         name: "Loki",
         type: "villian",
         avatar: "images/loki.jpg",
-        health: 20,
+        maxHealth: 25,
         diceCount: 2,
         currentDice:[]
     },
     {
-        name: "Bellatrix",
+        name: "Voldemort",
         type: "villian",
-        avatar: "images/beatrix.jpg",
-        health: 30,
-        diceCount: 2,
+        avatar: "images/monster.jpg",
+        maxHealth: 20,
+        diceCount: 3,
         currentDice:[]
     }
+
 ]
 
 // make this object visible to other JS files

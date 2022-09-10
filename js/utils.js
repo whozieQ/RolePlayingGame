@@ -1,14 +1,16 @@
 function getDiceRolls(numDice){
     // roll X number of 6-sided die
     // return an array listing each die that was rolled
-    return new Array(numDice).fill(0).map(function(){
-        return Math.floor(Math.random()*6) + 1
-    })  
+    return new Array(numDice).fill(0).map(()=> Math.floor(Math.random()*6) + 1)  
 }
 function getDicePlaceholderHTML (numDice){
     return new Array(numDice).fill(`<div class="placeholder-dice"></div>`).join('')
 }
-function checkHealth(){}
-
-export {getDiceRolls,getDicePlaceholderHTML}
+function setButtons(showButton){
+    document.getElementById("attack-button").style.display = "none"
+    document.getElementById("next-button").style.display = "none"
+    document.getElementById("reset-button").style.display = "none"
+    document.getElementById(`${showButton}-button`).style.display = "initial"
+}
+export {getDiceRolls,getDicePlaceholderHTML,setButtons}
 
