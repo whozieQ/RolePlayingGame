@@ -143,7 +143,7 @@ button {
 button:focus { outline: 0 }
 
 .end-game{
-    margin-top: 25%;
+    /* margin-top: 25%; */
     text-align: center;
 }
 
