@@ -33,7 +33,7 @@ export function Character(data){
     this.getDiceHTML = function(){
         // updates the dice HTML by rolling dice and showing result
         this.currentDice = getDiceRolls(this.diceCount)
-        return this.currentDice.map(num=>`<div class="dice">${num}</div>`).join('')        
+        return this.currentDice.map(num=>`<div class="dice"><p>${num}</p></div>`).join('')        
     }
 
     this.getCharacterHTML= function(){
