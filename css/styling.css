@@ -15,20 +15,10 @@ main{
     flex-direction: column;
 }
 
-img {
-    /* max-width: 200px;
-    max-height: 200px; */
-    object-fit: cover;
-}
-#hero,
-#villian{
-    margin: 1.5rem 0;
-}
 .character-card{
-    min-height: 70vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    margin: 1.5rem auto;
+    height: 50vh;
+    width: 90%;
 
     border: 0.2rem solid #000721;
     box-shadow: inset 0px 0px 6px 2px rgba(100,100,100,0.2),
@@ -36,38 +26,27 @@ img {
     background: #231d24;
     border-radius: 14px;
     padding: 0 1rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 .avatar-container{
-    max-height: min-content;
+    height: 75%;
+    /* border: red 1px solid; */
 }
 .avatar{
     border-radius: 10px;
-    background-color: rgba(248, 3, 3, 1);
+    background-color: rgba(132, 3, 3, 0.689);
     width: 60%;
-    max-height: 60%;
-    object-fit: fill;
-}
-
-/* typography */
-.character-card{
-    text-align: center;
-    font-size: 1.6rem;
-    color: white;
-}
-.name{
-    letter-spacing: 0.08em;
-}
-.health{
-    color:#ccc;
-    letter-spacing: 0.03em;
-    text-align: left;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-.health b {
-    font-weight: bold;
-    color:#fff;
-
+    height: 60%;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../images/hero.jpg");
+    display: flex;
+    align-items: center;
 }
 
 .health-bar-outer {
@@ -115,14 +94,16 @@ button:focus { outline: 0 }
 .dice-container{
     display: flex;
     justify-content: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    max-height: 10%;
+    align-items: center;
+    /* padding-top: 1rem;
+    padding-bottom: 1rem; */
+    height: 20%;
+    /* border: red solid 1px; */
 }
 .placeholder-dice,
 .dice{
-    min-height: 10vh;
-    min-width: 10vh;
+    aspect-ratio: 1/1;
+    height: 60%;
     background: #fff;   
     border-radius: 5px;
     border:1px solid #666;
@@ -143,21 +124,57 @@ button:focus { outline: 0 }
     flex: 0 2 5em
 }
 
+/* typography */
+.character-card{
+    text-align: center;
+    font-size: 1.6rem;
+    color: white;
+}
+.name{
+    letter-spacing: 0.08em;
+}
+.health{
+    color:#ccc;
+    letter-spacing: 0.03em;
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.health b {
+    font-weight: bold;
+    color:#fff;
+
+}
+h4{
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+}
+
 /* media query */
-@media(min-width:600px){
+@media (min-width:600px){
     main{
         flex-direction: row;
         justify-content: center;
-
+        min-height: 400px;
     }
     .character-card{
-        max-height: 80vh;
+        max-width: 45%;
+        max-height: 50vh;
         margin-left:5vw;
-        margin-right:5vw
+        margin-right:5vw;
+        min-height: 350px;
     }
-    .avatar{
-        min-width: 40vh;
-        max-height: 40vh;
-        object-fit: cover;
+
+}
+@media (min-height:660px) and (min-width: 600px){
+    main{
+        height: 85vh;
+        min-height: 400px;
     }
+    .character-card{
+        max-height: 90vh;
+        height: 80%;
+        min-height: 35px;
+    }
+
 }

@@ -11,6 +11,11 @@ function setButtons(showButton){
     document.getElementById("next-button").style.display = "none"
     document.getElementById("reset-button").style.display = "none"
     document.getElementById(`${showButton}-button`).style.display = "initial"
+    document.getElementById(`${showButton}-button`).style.visibility = "visible"
 }
-export {getDiceRolls,getDicePlaceholderHTML,setButtons}
+function toggleAttackButton(){
+    const btn = document.getElementById("attack-button")
+    btn.style.visibility === "hidden" ? btn.style.visibility = "visible" : btn.style.visibility = "hidden"
+}
+export {getDiceRolls,getDicePlaceholderHTML,setButtons,toggleAttackButton}
 

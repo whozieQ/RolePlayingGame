@@ -10,43 +10,56 @@ export function Character(data){
     this.health = this.maxHealth
     this.currentDice = new Array(this.diceCount).fill(0)
 
-    this.getHealthHTML = function(damage){
+    this.setHealth = function(damage){
+        const container = document.querySelector(`#${this.type} .health-stat`)
+        const avatar = document.querySelector(`#${this.type} .avatar`)
         //updates health by calculating damage done by supplied set of dice rolled
         this.health -= damage.reduce((total,currentElement) => total + currentElement)
 
         if (this.health <=0){
             this.health = 0
             this.alive = false
+            avatar.style.backgroundBlendMode = "darken"
         }
-        return  `<p class="health">health: <span class="health-stat">${this.health}</span></p>`
+        container.textContent = this.health
+        this.setHealthBar()
     }
 
-    this.getHealthBarHTML = function(){
+    this.setHealthBar = function(){
+        const container = document.querySelector(`#${this.type} .health-bar-inner`)
         // uses health & max health to display a dynamic health bar
         const percent = (this.health/this.maxHealth)*100
-        return `<div class="health-bar-inner ${percent <=25?"danger":""}" 
-                    style="width: ${percent}%;">
-                </div>`
+        container.style.width = `${percent}%`
+        percent < 25 ? container.classList.add("danger") : container.classList.remove("danger")
 
     }
 
-    this.getDiceHTML = function(){
+    this.rollDice = function(){
+        const container = document.querySelector(`#${this.type} .dice-container`)
         // updates the dice HTML by rolling dice and showing result
         this.currentDice = getDiceRolls(this.diceCount)
-        return this.currentDice.map(num=>`<div class="dice"><p>${num}</p></div>`).join('')        
+        container.innerHTML = this.currentDice.map(num=>`<div class="dice"><p>${num}</p></div>`).join('')        
     }
-
-    this.getCharacterHTML= function(){
+    this.setAvatar = function(){
+        document.querySelector(`#${this.type} .avatar`).style.backgroundImage = `url("../${this.avatar}")`
+    }
+    this.setCharacterHTML= function(){
         // sets the initial HTML for the character card
-        const {name, avatar, diceCount} = this
-        return `<div class="avatar-container">
+        const container = document.querySelector(`#${this.type}`)
+        const {name, diceCount} = this
+        container.innerHTML = `<div class="avatar-container">
                     <h4 class="name">${name}</h4>
-                    <img class="avatar" src="${avatar}" alt="image of ${name} fantasy character">
-                    ${this.getHealthHTML([0])}
+                    <div class="avatar"></div>
+                    <p class="health">health: <span class="health-stat"></span></p>
                     <div class="health-bar-outer">
-                        ${this.getHealthBarHTML()}
+                        <div class="health-bar-inner">
+                        </div>
                     </div>
                 </div>
                 <div class="dice-container">${getDicePlaceholderHTML(diceCount)}</div>`
-}
+        this.setAvatar()
+        this.setHealth([0])
+    }
+
+
 }
