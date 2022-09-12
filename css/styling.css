@@ -68,6 +68,7 @@ main{
 
 #actions{
     text-align: center;
+    padding-bottom: 2rem;
 }
 button {
     margin-top: .5rem;
@@ -149,6 +150,9 @@ h4{
     margin-top: 1rem;
     margin-bottom: .5rem;
 }
+#end-game{
+    font-size: 2rem;
+}
 
 /* media query */
 @media (min-width:600px){
@@ -168,7 +172,7 @@ h4{
 }
 @media (min-height:660px) and (min-width: 600px){
     main{
-        height: 85vh;
+        height: 80vh;
         min-height: 400px;
     }
     .character-card{

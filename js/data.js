@@ -47,7 +47,7 @@ const villians = [
         name: "Voldemort",
         type: "villian",
         avatar: "images/monster.jpg",
-        maxHealth: 25,
+        maxHealth: 20,
         diceCount: 3,
         currentDice:[]
     }

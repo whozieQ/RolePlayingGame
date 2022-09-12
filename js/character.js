@@ -1,5 +1,29 @@
 import { getDiceRolls, getDicePlaceholderHTML } from "./utils.js"
+import { heroes, villians } from "./data.js"
 
+export function Game(){
+    this.round = 1
+    this.numRounds = villians.length
+    this.lastRound = false
+
+    this.nextRound = function(){
+        this.round += 1
+        this.round === this.numRounds ? this.lastRound = true : this.lastRound = false
+        this.nextVillian()
+    }
+
+    this.nextVillian = function(){
+        this.villian = new Character(villians[this.round - 1])
+    }
+
+    // randomly select a hero
+    this.hero = new Character(heroes[Math.floor(Math.random()*heroes.length)])
+    //start with the first villian
+    this.villian = null
+    this.nextVillian()
+
+
+}
 // constructor to create a character object from one of the character array objects
 export function Character(data){
     // transfer all properties in data object into matching properties in this
@@ -46,7 +70,29 @@ export function Character(data){
     this.setCharacterHTML= function(){
         // sets the initial HTML for the character card
         const container = document.querySelector(`#${this.type}`)
-        const {name, diceCount} = this
+        const {name, type} = this
+        // randomly give character 1 more or less dice
+        if (type === 'villian'){
+            if (this.diceCount > 1){
+                const buffMeUpChance = 20
+                // console.log(`There is a 1 in ${buffMeUpChance} chance the villian will BUFF`)
+                const gamble = (Math.floor(Math.random()*buffMeUpChance) + 1 )
+                // console.log(gamble)
+                if (gamble === buffMeUpChance){
+                    this.diceCount += 1
+                    // console.log("Villian has been BUFFED")
+                } 
+            }
+        } else {
+            const nerfMeChance = 12
+            // console.log(`There is a 1 in ${nerfMeChance} chance the hero will get NERFED`)
+            const gamble = (Math.floor(Math.random()*nerfMeChance) + 1 )
+            // console.log(gamble)
+        if (gamble === nerfMeChance){
+                this.diceCount -= 1
+                // console.log("Hero has been NERFED")
+            } 
+        }
         container.innerHTML = `<div class="avatar-container">
                     <h4 class="name">${name}</h4>
                     <div class="avatar"></div>
@@ -56,7 +102,7 @@ export function Character(data){
                         </div>
                     </div>
                 </div>
-                <div class="dice-container">${getDicePlaceholderHTML(diceCount)}</div>`
+                <div class="dice-container">${getDicePlaceholderHTML(this.diceCount)}</div>`
         this.setAvatar()
         this.setHealth([0])
     }
