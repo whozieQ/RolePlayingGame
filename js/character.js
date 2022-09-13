@@ -1,41 +1,23 @@
 import { getDiceRolls, getDicePlaceholderHTML } from "./utils.js"
-import { heroes, villians } from "./data.js"
 
-export function Game(){
-    this.round = 1
-    this.numRounds = villians.length
-    this.lastRound = false
-    this.inProgress = false
+// constructor to create a character object from one of the characters in the data
+export class Character{
+    constructor(data){
+        // transfer all properties in data object into matching properties in this
+        Object.assign(this,data)
+        // add a new property indicating if the player is still alive
+        this.alive = true
+        // add a new property to store current health, starting with max health
+        this.health = this.maxHealth
+        this.currentDice = new Array(this.diceCount).fill(0)
+        this.buffed = false
+        this.nerfed = false
 
-    this.nextRound = function(){
-        this.round += 1
-        this.round === this.numRounds ? this.lastRound = true : this.lastRound = false
-        this.nextVillian()
     }
+ 
 
-    this.nextVillian = function(){
-        this.villian = new Character(villians[this.round - 1])
-    }
-
-    // randomly select a hero
-    this.hero = new Character(heroes[Math.floor(Math.random()*heroes.length)])
-    //start with the first villian
-    this.villian = null
-    this.nextVillian()
-
-
-}
-// constructor to create a character object from one of the character array objects
-export function Character(data){
-    // transfer all properties in data object into matching properties in this
-    Object.assign(this,data)
-    // add a new property indicating if the player is still alive
-    this.alive = true
-    // add a new property to store current health, starting with max health
-    this.health = this.maxHealth
-    this.currentDice = new Array(this.diceCount).fill(0)
-
-    this.setHealth = function(damage){
+    // methods
+    setHealth (damage){
         const container = document.querySelector(`#${this.type} .health-stat`)
         const avatar = document.querySelector(`#${this.type} .avatar`)
         //updates health by calculating damage done by supplied set of dice rolled
@@ -51,7 +33,7 @@ export function Character(data){
         this.setHealthBar()
     }
 
-    this.setHealthBar = function(){
+    setHealthBar(){
         const container = document.querySelector(`#${this.type} .health-bar-inner`)
         // uses health & max health to display a dynamic health bar
         const percent = (this.health/this.maxHealth)*100
@@ -60,19 +42,23 @@ export function Character(data){
 
     }
 
-    this.rollDice = function(){
-        const container = document.querySelector(`#${this.type} .dice-container`)
+    rollDice(){
         // updates the dice HTML by rolling dice and showing result
         this.currentDice = getDiceRolls(this.diceCount)
-        container.innerHTML = this.currentDice.map(num=>`<div class="dice"><p>${num}</p></div>`).join('')        
+        const container = document.querySelector(`#${this.type} .dice-container`)
+        const html = this.currentDice.map(num=>`<div class="dice"><p>${num}</p></div>`).join('')        
+        container.innerHTML = html
     }
-    this.setAvatar = function(){
+
+    setAvatar(){
         document.querySelector(`#${this.type} .avatar`).style.backgroundImage = `url("../${this.avatar}")`
     }
-    this.setCharacterHTML= function(){
+    setCharacterHTML(){
         // sets the initial HTML for the character card
         const container = document.querySelector(`#${this.type}`)
         const {name, type} = this
+        let extra = ""
+
         // randomly give character 1 more or less dice
         if (type === 'villian'){
             if (this.diceCount > 1){
@@ -82,16 +68,20 @@ export function Character(data){
                 // console.log(gamble)
                 if (gamble === buffMeUpChance){
                     this.diceCount += 1
+                    this.buffed = true
+                    extra =`<p class="chance">Buffed! +1 Die</p>`
                     // console.log("Villian has been BUFFED")
                 } 
             }
         } else {
-            const nerfMeChance = 12
+            const nerfMeChance = 20
             // console.log(`There is a 1 in ${nerfMeChance} chance the hero will get NERFED`)
             const gamble = (Math.floor(Math.random()*nerfMeChance) + 1 )
             // console.log(gamble)
         if (gamble === nerfMeChance){
                 this.diceCount -= 1
+                this.nerfed = true
+                extra =`<p class="chance">Cursed! -1 Die!</p>`
                 // console.log("Hero has been NERFED")
             } 
         }
@@ -104,7 +94,7 @@ export function Character(data){
                         </div>
                     </div>
                 </div>
-                <div class="dice-container">${getDicePlaceholderHTML(this.diceCount)}</div>`
+                <div class="dice-container">${extra}${getDicePlaceholderHTML(this.diceCount)}</div>`
         this.setAvatar()
         this.setHealth([0])
     }

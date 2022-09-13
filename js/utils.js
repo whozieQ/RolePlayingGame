@@ -6,9 +6,5 @@ function getDiceRolls(numDice){
 function getDicePlaceholderHTML (numDice){
     return new Array(numDice).fill(`<div class="placeholder-dice"></div>`).join('')
 }
-function toggleAttackButton(){
-    const btn = document.getElementById("attack-button")
-    btn.style.visibility === "hidden" ? btn.style.visibility = "visible" : btn.style.visibility = "hidden"
-}
-export {getDiceRolls,getDicePlaceholderHTML,toggleAttackButton}
+export {getDiceRolls, getDicePlaceholderHTML}
 

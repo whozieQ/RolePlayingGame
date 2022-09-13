@@ -1,15 +1,15 @@
-import { Game } from "./character.js"
-
+import { Game } from "./game.js"
 
 let game
 let gameCount = 0
 const modal = document.getElementById("modal")
 const closeBtn = document.getElementById('close-button')
+const attackBtn = document.getElementById('attack-button')
 const soundEffect = new Audio("../dice.wav")
 
 
 closeBtn.addEventListener("click",closeModal)
-document.getElementById('attack-button').addEventListener("click",attack)
+attackBtn.addEventListener("click",attack)
 
 showIntro()
 
@@ -55,11 +55,24 @@ function endRound(){
 
 function endGame(){
     closeBtn.textContent = "New Game"
-    const hero = game.hero
-    const villian = game.villian
-    const message = !hero.alive && !villian.alive ? `Alas, no survivors! Evil is defeated, but at what cost?` : 
-        hero.alive ? `${hero.name} has won!` : `${villian.name} has won!`
-    const endEmoji = !hero.alive && !villian.alive ? '😔' : hero.alive ?'🏆' :'☠️'
+    const winner = game.getWinner()
+    let message = ""
+    let endEmoji = ""
+    switch (winner){
+        case "tie":
+            message = `Alas, no survivors! Evil is defeated, but at what cost?`
+            endEmoji = '😔'
+            break;
+        case game.hero.type:
+            message = `Hooray! ${game.hero.name} has won!`
+            endEmoji = '🏆'
+            break;
+        case game.villian.type:
+            message = `Oh No! ${game.villian.name} has won`
+            endEmoji = '☠️'
+            break;
+    }
+
     openModal(`<h2>Game Over!</h2><p> ${message}<br>${endEmoji}</p>`)
 }
 
