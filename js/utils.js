@@ -6,16 +6,9 @@ function getDiceRolls(numDice){
 function getDicePlaceholderHTML (numDice){
     return new Array(numDice).fill(`<div class="placeholder-dice"></div>`).join('')
 }
-function setButtons(showButton){
-    document.getElementById("attack-button").style.display = "none"
-    document.getElementById("next-button").style.display = "none"
-    document.getElementById("reset-button").style.display = "none"
-    document.getElementById(`${showButton}-button`).style.display = "initial"
-    document.getElementById(`${showButton}-button`).style.visibility = "visible"
-}
 function toggleAttackButton(){
     const btn = document.getElementById("attack-button")
     btn.style.visibility === "hidden" ? btn.style.visibility = "visible" : btn.style.visibility = "hidden"
 }
-export {getDiceRolls,getDicePlaceholderHTML,setButtons,toggleAttackButton}
+export {getDiceRolls,getDicePlaceholderHTML,toggleAttackButton}
 

@@ -1,20 +1,30 @@
 import { Game } from "./character.js"
-import { setButtons, toggleAttackButton } from "./utils.js"
 
 
 let game
-const endMessage = document.getElementById("end-game")
+let gameCount = 0
+const modal = document.getElementById("modal")
+const closeBtn = document.getElementById('close-button')
+const soundEffect = new Audio("../dice.wav")
 
+
+closeBtn.addEventListener("click",closeModal)
 document.getElementById('attack-button').addEventListener("click",attack)
-document.getElementById('reset-button').addEventListener("click",newGame)
-document.getElementById('next-button').addEventListener("click",newRound)
 
-newGame()
+showIntro()
 
 //render both the hero and villian on the page
 function renderPlayers(){
     game.hero.setCharacterHTML()
     game.villian.setCharacterHTML() 
+}
+function closeModal(){
+    modal.style.display = "none"
+    gameCount === 0 ? newGame() : game.lastRound ? newGame() : newRound()
+}
+function openModal(message){
+    document.getElementById("game-message").innerHTML = message
+    modal.style.display = "block"
 }
 
 // both players attack and results are shown
@@ -28,6 +38,7 @@ function attack(){
 
 // roll dice, reduce opponents health and update their health bar
 function playerTurn(attacker, defender){
+    soundEffect.play()
     attacker.rollDice()
     defender.setHealth(attacker.currentDice)
 }
@@ -37,38 +48,42 @@ function endRound(){
     else {
         if (game.lastRound){  endGame() }
         else{
-            toggleAttackButton()
-            endMessage.textContent = "The villian called for reinforcements with their dying breath..."
-            // make the Next Round button visible
-            setTimeout(()=>{setButtons("next")},2000)
+            openModal(`<h2>${game.villian.name} defeated!</h2><p>Oh no! The villian called for reinforcements with their dying breath..</p>`)
         } 
     }
 }
 
 function endGame(){
-    toggleAttackButton()
+    closeBtn.textContent = "New Game"
     const hero = game.hero
     const villian = game.villian
     const message = !hero.alive && !villian.alive ? `Alas, no survivors! Evil is defeated, but at what cost?` : 
         hero.alive ? `${hero.name} has won!` : `${villian.name} has won!`
     const endEmoji = !hero.alive && !villian.alive ? '😔' : hero.alive ?'🏆' :'☠️'
-    endMessage.textContent = `Game Over! ${message}${endEmoji}`
-    setTimeout(()=> {setButtons("reset")},4000)
+    openModal(`<h2>Game Over!</h2><p> ${message}<br>${endEmoji}</p>`)
 }
 
 function newRound(){
-    endMessage.textContent = ''
     game.nextRound()
     renderPlayers()
-    setButtons("attack")
 }
 
 function newGame(){
     game = new Game()
-    console.log(game)
-    endMessage.textContent = ''
+    gameCount ++
     renderPlayers()
-    setButtons("attack")
+ 
+}
+
+function showIntro(){
+    closeBtn.textContent = "I'm Ready"
+    const introMessage = `<h2>Dice Battle: Hero vs Villian</h2><p>
+    Both characters roll dice to attack.<br>
+    Damage = the opponent's dice total.<br>
+    Health is reduced by Damage.<br>
+    Last one with health left... wins.</p>`
+    openModal(introMessage)
+
 }
 
 

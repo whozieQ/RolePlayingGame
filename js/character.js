@@ -5,6 +5,7 @@ export function Game(){
     this.round = 1
     this.numRounds = villians.length
     this.lastRound = false
+    this.inProgress = false
 
     this.nextRound = function(){
         this.round += 1
@@ -38,14 +39,15 @@ export function Character(data){
         const container = document.querySelector(`#${this.type} .health-stat`)
         const avatar = document.querySelector(`#${this.type} .avatar`)
         //updates health by calculating damage done by supplied set of dice rolled
-        this.health -= damage.reduce((total,currentElement) => total + currentElement)
+        const totalDamage = damage.reduce((total,currentElement) => total + currentElement)
+        this.health -= totalDamage
 
         if (this.health <=0){
             this.health = 0
             this.alive = false
             avatar.style.backgroundBlendMode = "darken"
         }
-        container.textContent = this.health
+        container.textContent = totalDamage === 0 ? this.health : `${this.health} (${totalDamage} damage)`
         this.setHealthBar()
     }
 
