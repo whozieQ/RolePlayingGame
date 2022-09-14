@@ -1,4 +1,4 @@
-// a choice of multiple types of heroes and villians as players
+// a choice of multiple types of heroes and villains as players
 
 const heroes = [
     {
@@ -26,10 +26,10 @@ const heroes = [
         currentDice:[]
     },  
 ]
-const villians = [
+const villains = [
     {
         name: "Bellatrix",
-        type: "villian",
+        type: "villain",
         avatar: "images/beatrix.jpg",
         maxHealth: 30,
         diceCount: 1,
@@ -37,7 +37,7 @@ const villians = [
     },
     {
         name: "Loki",
-        type: "villian",
+        type: "villain",
         avatar: "images/loki.jpg",
         maxHealth: 25,
         diceCount: 2,
@@ -45,7 +45,7 @@ const villians = [
     },
     {
         name: "Voldemort",
-        type: "villian",
+        type: "villain",
         avatar: "images/monster.jpg",
         maxHealth: 20,
         diceCount: 3,
@@ -55,4 +55,4 @@ const villians = [
 ]
 
 // make this object visible to other JS files
-export {heroes, villians}
+export {heroes, villains}

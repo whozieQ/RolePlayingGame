@@ -13,10 +13,10 @@ attackBtn.addEventListener("click",attack)
 
 showIntro()
 
-//render both the hero and villian on the page
+//render both the hero and villain on the page
 function renderPlayers(){
     game.hero.setCharacterHTML()
-    game.villian.setCharacterHTML() 
+    game.villain.setCharacterHTML() 
 }
 function closeModal(){
     modal.style.display = "none"
@@ -29,9 +29,9 @@ function openModal(message){
 
 // both players attack and results are shown
 function attack(){
-    playerTurn(game.hero,game.villian)
-    playerTurn(game.villian,game.hero)
-    if (!game.hero.alive || !game.villian.alive){
+    playerTurn(game.hero,game.villain)
+    playerTurn(game.villain,game.hero)
+    if (!game.hero.alive || !game.villain.alive){
         endRound()
     }
 }
@@ -48,7 +48,7 @@ function endRound(){
     else {
         if (game.lastRound){  endGame() }
         else{
-            openModal(`<h2>${game.villian.name} defeated!</h2><p>Oh no! The villian called for reinforcements with their dying breath..</p>`)
+            openModal(`<h2>${game.villain.name} defeated!</h2><p>Oh no! The villain called for reinforcements with their dying breath..</p>`)
         } 
     }
 }
@@ -67,8 +67,8 @@ function endGame(){
             message = `Hooray! ${game.hero.name} has won!`
             endEmoji = '🏆'
             break;
-        case game.villian.type:
-            message = `Oh No! ${game.villian.name} has won`
+        case game.villain.type:
+            message = `Oh No! ${game.villain.name} has won`
             endEmoji = '☠️'
             break;
     }
@@ -90,7 +90,7 @@ function newGame(){
 
 function showIntro(){
     closeBtn.textContent = "I'm Ready"
-    const introMessage = `<h2>Dice Battle: Hero vs Villian</h2><p>
+    const introMessage = `<h2>Dice Battle: Hero vs villain</h2><p>
     Both characters roll dice to attack.<br>
     Damage = the opponent's dice total.<br>
     Health is reduced by Damage.<br>

@@ -60,17 +60,17 @@ export class Character{
         let extra = ""
 
         // randomly give character 1 more or less dice
-        if (type === 'villian'){
+        if (type === 'villain'){
             if (this.diceCount > 1){
                 const buffMeUpChance = 20
-                // console.log(`There is a 1 in ${buffMeUpChance} chance the villian will BUFF`)
+                // console.log(`There is a 1 in ${buffMeUpChance} chance the villain will BUFF`)
                 const gamble = (Math.floor(Math.random()*buffMeUpChance) + 1 )
                 // console.log(gamble)
                 if (gamble === buffMeUpChance){
                     this.diceCount += 1
                     this.buffed = true
                     extra =`<p class="chance">Buffed! +1 Die</p>`
-                    // console.log("Villian has been BUFFED")
+                    // console.log("villain has been BUFFED")
                 } 
             }
         } else {

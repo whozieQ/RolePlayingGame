@@ -1,34 +1,34 @@
-import { heroes, villians } from "./data.js"
+import { heroes, villains } from "./data.js"
 import { Character}  from "./character.js"
 
 export class Game{
     constructor(){
         this.round = 1
-        this.numRounds = villians.length
+        this.numRounds = villains.length
         this.lastRound = false
         this.inProgress = false
         // randomly select a hero
         this.hero = new Character(heroes[Math.floor(Math.random()*heroes.length)])
-        //start with the first villian
-        this.villian = null
-        this.nextVillian()
+        //start with the first villain
+        this.villain = null
+        this.nextvillain()
     }
     // methods
     nextRound(){
         this.round += 1
         this.round === this.numRounds ? this.lastRound = true : this.lastRound = false
-        this.nextVillian()
+        this.nextvillain()
     }
 
-    nextVillian(){
-        this.villian = new Character(villians[this.round - 1])
+    nextvillain(){
+        this.villain = new Character(villains[this.round - 1])
     }
 
     getWinner(){
         let winner = "none"
-        if (this.hero.alive && this.villian.alive){ winner = "none" }
-        if (!this.hero.alive && !this.villian.alive){ winner = "tie" }
-        if (this.hero.alive) { winner = "hero" } else { winner = "villian" }
+        if (this.hero.alive && this.villain.alive){ winner = "none" }
+        if (!this.hero.alive && !this.villain.alive){ winner = "tie" }
+        if (this.hero.alive) { winner = "hero" } else { winner = "villain" }
         return winner
     }
 
